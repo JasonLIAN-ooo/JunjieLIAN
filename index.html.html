@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JunjieLIAN</title>
+<link rel="icon" type="image/png" href="https://i.postimg.cc/zv5RxMLR/92f27647bf55db6341532394c4337ff0.png">
+<link rel="apple-touch-icon" href="https://i.postimg.cc/zv5RxMLR/92f27647bf55db6341532394c4337ff0.png">
+<meta name="description" content="Junjie Lian — film scholar working on transnational cinema, Asian cinema, creative industries, cultural memory and film festivals.">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  :root {
+    --bg: #ffffff;
+    --fg: #1b1b1d;
+    --muted: #6a6a72;
+    --accent: #1a5fb4;
+    --rule: #e8e8e8;
+    --chip: #f4f4f4;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+                 Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14.5px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+    zoom: 0.95;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 32px 56px; }
+
+  .topnav {
+    position: sticky; top: 0; z-index: 1000;
+    background: #ffffff; border-bottom: 1px solid var(--rule);
+    display: flex; flex-wrap: nowrap; align-items: center; justify-content: center;
+    gap: 0 44px;
+    padding: 16px max(32px, calc((100vw / 0.95 - 1040px) / 2 + 32px));
+    width: 100%;
+  }
+  .topnav > .nav-logo {
+    position: absolute; left: 32px; top: 50%; transform: translateY(-50%);
+    font-size: .82rem; font-weight: 500; color: var(--fg);
+    white-space: nowrap; text-decoration: none; cursor: pointer;
+    display: inline-flex; align-items: center; letter-spacing: 0;
+  }
+  .topnav > .nav-logo:hover { text-decoration: none; }
+  .topnav > .nav-logo .logo-name {
+    display: inline-block; font-weight: 500; color: var(--fg);
+    letter-spacing: 0; padding: 2px 8px; margin: -2px -8px;
+    border-radius: 4px; background: transparent;
+    transition: background .15s ease;
+  }
+  .topnav > .nav-logo:hover .logo-name { background: #ececef; }
+  .topnav > .nav-logo .logo-zh { font-weight: 500; margin-left: 5px; letter-spacing: .04em; }
+  .topnav > .nav-logo .logo-crumb { font-weight: 500; color: var(--fg); letter-spacing: 0; display: inline-block; cursor: default; }
+  .topnav > .nav-logo .logo-crumb .crumb-sep { color: #b8b8bd; font-weight: 500; margin: 0 7px; }
+
+  .topnav > a:not(.nav-logo),
+  .nav-trigger {
+    font-size: .88rem; font-weight: 500; color: var(--muted);
+    padding: 3px 0;
+    transition: color .15s ease, transform .15s ease;
+    white-space: nowrap; cursor: pointer; display: inline-block;
+    text-decoration: none; transform-origin: center;
+  }
+  .topnav > a:not(.nav-logo):hover,
+  .nav-trigger:hover { color: var(--fg); text-decoration: none; transform: scale(1.1); }
+  .topnav > a:not(.nav-logo).active,
+  .nav-dropdown.active .nav-trigger { color: var(--fg); font-weight: 600; transform: scale(1.1); }
+
+  .nav-indicator {
+    position: absolute; bottom: -1px; left: 0; width: 0; height: 2px;
+    background: var(--accent);
+    transition: left .3s cubic-bezier(.4,0,.2,1), width .3s cubic-bezier(.4,0,.2,1), opacity .2s ease;
+    pointer-events: none; opacity: 0; z-index: 5;
+  }
+  .nav-indicator.ready { opacity: 1; }
+
+  .nav-dropdown { position: relative; display: inline-block; }
+  .nav-drop-menu {
+    position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+    background: #ffffff; border: 1px solid var(--rule);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10), 0 2px 6px rgba(0, 0, 0, 0.05);
+    min-width: 240px; padding: 6px 0; display: none; z-index: 1001;
+  }
+  .nav-drop-menu::before {
+    content: ""; position: absolute; top: -6px; left: 0; right: 0; height: 6px; background: transparent;
+  }
+  .nav-dropdown:hover .nav-drop-menu { display: block; }
+
+  .nav-drop-menu a {
+    display: block; padding: 8px 24px;
+    font-size: .84rem; font-weight: 400; color: var(--muted);
+    text-decoration: none; white-space: nowrap; text-align: center;
+    background: transparent;
+    transition: background .15s ease, color .15s ease, font-weight .15s ease;
+  }
+  .nav-drop-menu a:hover { background: var(--chip); color: var(--fg); font-weight: 600; text-decoration: none; }
+  .nav-drop-menu a.active { color: var(--fg); font-weight: 400; background: transparent; }
+  .nav-drop-menu a.active:hover { background: var(--chip); font-weight: 600; }
+
+  .page { display: none; padding-top: 34px; }
+  .page.active { display: block; }
+  #about { padding-top: 0; }
+  @keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .page.active.fade-in { animation: pageFadeIn .38s ease-out both; }
+
+  .hero-bg {
+    width: calc(100vw / 0.95);
+    margin-left: calc(50% - 50vw / 0.95);
+    margin-right: calc(50% - 50vw / 0.95);
+    background-image: url('https://i.postimg.cc/QtGNmD4V/12b26b8f11890196691f16bab5bd6e02.jpg');
+    background-size: cover; background-position: center 70%; background-repeat: no-repeat;
+    padding: 32px max(32px, calc((100vw / 0.95 - 1040px) / 2 + 32px)) 32px;
+  }
+  .hero-card {
+    background: rgba(255, 255, 255, 0.89); border-radius: 14px;
+    padding: 30px 40px;
+    box-shadow: 0 14px 44px rgba(0, 0, 0, 0.16), 0 4px 14px rgba(0, 0, 0, 0.08);
+    display: flex; align-items: flex-start; justify-content: center;
+  }
+  .hero {
+    display: flex; flex-wrap: nowrap; align-items: flex-start; justify-content: center;
+    gap: 48px; width: 100%; max-width: 100%;
+  }
+  .hero-left { display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 20px; flex: 0 0 auto; }
+  .hero-right { display: flex; flex-direction: column; justify-content: flex-start; gap: 22px; min-width: 0; flex: 0 1 auto; }
+  .hero-avatar { align-self: flex-start; }
+  .avatar-wrap {
+    width: 160px; height: 160px; border-radius: 50%; overflow: hidden;
+    background: var(--chip); border: 1px solid var(--rule);
+    display: block; position: relative;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+  .avatar {
+    position: absolute; top: 50%; left: 50%;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    transform: translate(calc(-50% + 1px), calc(-50% + 13px)) scale(1.22);
+    display: block;
+  }
+  h1 { margin: 0 0 8px; font-size: 1.9rem; line-height: 1.2; letter-spacing: -0.015em; font-weight: 700; }
+  h1 .name-zh { font-size: 1.6rem; font-weight: 600; margin-left: 12px; letter-spacing: .04em; }
+  .role { margin: 0; font-size: .88rem; font-weight: 600; }
+
+  .hero-interests { display: flex; flex-direction: column; align-items: flex-start; width: 100%; margin-top: 14px; }
+  .ri-label { margin: 0 0 2px; font-size: .72rem; font-weight: 700; line-height: 1.4; color: var(--fg); }
+  .interests-line { margin: 0; font-size: .72rem; line-height: 1.55; color: var(--fg); }
+
+  .contact-info {
+    display: flex; flex-direction: column; align-items: stretch; gap: 6px;
+    font-size: .72rem; line-height: 1.5; color: var(--fg); text-align: left;
+    white-space: nowrap; width: auto; align-self: flex-start;
+  }
+  .contact-info > span { display: block; }
+  .contact-info .ci-label { font-weight: 700; }
+  .contact-info a { color: var(--accent); }
+  .contact-info a:hover { text-decoration: underline; }
+
+  .cv-row { display: block; width: 100%; }
+  .cv-chip {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; padding: 3px 12px;
+    border: 1px solid var(--rule); border-radius: 999px;
+    background: #ffffff; color: #000000;
+    font-size: .72rem; font-weight: 600; letter-spacing: .02em;
+    text-decoration: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease;
+    transform-origin: center; cursor: pointer;
+  }
+  .contact-info a.cv-chip, .contact-info .cv-chip { color: #000000; }
+  .contact-info a.cv-chip:hover, .contact-info a.cv-chip:focus, .contact-info a.cv-chip:active,
+  .contact-info .cv-chip:hover, .contact-info .cv-chip:focus, .contact-info .cv-chip:active {
+    transform: scale(1.08); background: var(--fg); color: #ffffff !important;
+    border-color: var(--fg); text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
+  }
+
+  .contact-info a.linkedin-link {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 18px; height: 18px;
+    border: 1px solid var(--rule); border-radius: 50%;
+    background: #ffffff; color: var(--fg);
+    text-decoration: none; margin-left: 8px; vertical-align: middle;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.10);
+    transition: background .15s ease, color .15s ease, border-color .15s ease, transform .18s ease;
+    transform-origin: center; flex: 0 0 auto;
+  }
+  .contact-info a.linkedin-link:hover {
+    background: var(--fg); color: #ffffff; border-color: var(--fg);
+    transform: scale(1.15); text-decoration: none;
+  }
+  .contact-info a.linkedin-link svg { width: 8px; height: 8px; display: block; stroke: currentColor; }
+
+  .read-more, .entry-link, .title-link {
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid var(--rule); border-radius: 50%;
+    background: #ffffff; color: var(--fg);
+    text-decoration: none; margin-left: 8px; vertical-align: middle;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.10);
+    transition: background .15s ease, color .15s ease, border-color .15s ease, transform .18s ease;
+    transform-origin: center; flex: 0 0 auto;
+  }
+  .read-more { width: 18px; height: 18px; } .read-more svg { width: 8px; height: 8px; display: block; }
+  .entry-link { width: 18px; height: 18px; } .entry-link svg { width: 8px; height: 8px; display: block; }
+  .title-link { width: 18px; height: 18px; } .title-link svg { width: 8px; height: 8px; display: block; }
+  .read-more:hover, .entry-link:hover, .title-link:hover {
+    background: var(--fg); color: #ffffff; border-color: var(--fg);
+    transform: scale(1.15); text-decoration: none;
+  }
+  .hero-link-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 18px; height: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 50%;
+    background: transparent; color: #ffffff;
+    text-decoration: none; margin-left: 8px; vertical-align: middle;
+    transition: background .15s ease, color .15s ease, border-color .15s ease, transform .18s ease;
+    transform-origin: center; flex: 0 0 auto;
+  }
+  .hero-link-btn:hover {
+    background: #ffffff; color: #1b1b1d; border-color: #ffffff;
+    transform: scale(1.15); text-decoration: none;
+  }
+  .hero-link-btn svg { width: 8px; height: 8px; display: block; stroke: currentColor; }
+
+  .bio { margin: 0 0 6px; font-size: 0.74rem; line-height: 1.55; color: var(--fg); max-width: 560px; }
+  .bio:last-child { margin-bottom: 0; }
+  .bio em { font-style: italic; }
+
+  section { margin-top: 58px; scroll-margin-top: 80px; }
+  .page > section:first-child { margin-top: 0; }
+  h2 {
+    margin: 0 0 24px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 1.2rem; font-weight: 700; color: var(--fg);
+  }
+  h3.group {
+    margin: 34px 0 14px; font-size: .98rem; font-weight: 700;
+    padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+  }
+  h3.group:first-of-type { margin-top: 0; }
+  h3.group.line-under { border-bottom: 1px solid var(--rule); padding-bottom: 8px; margin-bottom: 18px; }
+  .entry { padding: 18px 0; border-top: 1px solid var(--rule); }
+  .entry:first-of-type { padding-top: 0; border-top: none; }
+  .entry.no-border-top { border-top: none; }
+  .entry-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 8px 20px; flex-wrap: nowrap;
+  }
+  .entry-title { margin: 0; font-size: .88rem; font-weight: 600; line-height: 1.5; flex: 1 1 auto; min-width: 0; }
+  .entry-date { flex: 0 0 auto; color: var(--muted); font-size: .78rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .entry-sub { margin: 3px 0 0; font-size: .8rem; color: var(--muted); }
+  .entry-sub.entry-company {
+    font-size: .88rem; font-weight: 600; color: var(--fg); line-height: 1.5; margin-top: 4px;
+  }
+  .entry-desc { margin: 9px 0 0; font-size: .9rem; }
+  #academic-activities .entry-sub { font-size: .88rem; font-weight: 600; color: var(--fg); line-height: 1.5; margin-top: 3px; }
+  .entry-points { margin: 9px 0 0; padding-left: 1.15em; font-size: .9rem; }
+  .entry-points li { margin-bottom: 6px; }
+  .entry-points li:last-child { margin-bottom: 0; }
+  .entry-points ul.sub-points { margin: 6px 0 0; padding-left: 1.15em; list-style: disc; }
+  .entry-points ul.sub-points li { margin-bottom: 5px; }
+  .entry-points ul.sub-points li:last-child { margin-bottom: 0; }
+  .fields { margin: 10px 0 0; font-size: .9rem; }
+  .fields ul { margin: 0; padding-left: 1.2em; list-style: disc; }
+  .fields li { margin-bottom: 7px; }
+  .fields li:last-child { margin-bottom: 0; }
+  .k { font-weight: 700; color: var(--fg); }
+  .cite { margin: 0; font-size: .92rem; line-height: 1.65; font-weight: 600; }
+  .cite em { font-style: italic; }
+
+  #papers {
+    width: calc(100vw / 0.95);
+    margin-left: calc(50% - 50vw / 0.95);
+    margin-right: calc(50% - 50vw / 0.95);
+    padding: 0; background: #000;
+  }
+  #papers > h2 {
+    margin: 0; padding: 36px max(32px, calc((100vw / 0.95 - 1040px) / 2 + 32px)) 16px;
+    border-bottom: 1px solid var(--rule); background: #ffffff;
+    color: var(--fg); font-size: 1.3rem; letter-spacing: .02em;
+  }
+  .paper-list { list-style: none; margin: 0; padding: 0; background: #000; }
+  .paper-hero {
+    position: relative; width: 100%; margin: 0; background: #000;
+    overflow: hidden; display: flex; justify-content: flex-end;
+  }
+  .paper-hero:last-child { margin-bottom: 0; }
+  .paper-hero + .paper-hero { border-top: 2px solid #ffffff; }
+  .paper-hero-bg {
+    position: absolute; top: 0; left: 0; height: 100%; width: auto;
+    display: block; z-index: 1;
+    -webkit-mask-image: linear-gradient(to right,
+      #000 0%, #000 30%, rgba(0,0,0,0.97) 38%, rgba(0,0,0,0.9) 46%,
+      rgba(0,0,0,0.78) 54%, rgba(0,0,0,0.62) 62%, rgba(0,0,0,0.45) 70%,
+      rgba(0,0,0,0.3) 78%, rgba(0,0,0,0.17) 86%, rgba(0,0,0,0.07) 93%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to right,
+      #000 0%, #000 30%, rgba(0,0,0,0.97) 38%, rgba(0,0,0,0.9) 46%,
+      rgba(0,0,0,0.78) 54%, rgba(0,0,0,0.62) 62%, rgba(0,0,0,0.45) 70%,
+      rgba(0,0,0,0.3) 78%, rgba(0,0,0,0.17) 86%, rgba(0,0,0,0.07) 93%, rgba(0,0,0,0) 100%);
+  }
+  .paper-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right,
+      rgba(0,0,0,0) 0%, rgba(0,0,0,0) 36%, rgba(0,0,0,0.08) 46%,
+      rgba(0,0,0,0.2) 56%, rgba(0,0,0,0.35) 66%, rgba(0,0,0,0.52) 76%,
+      rgba(0,0,0,0.7) 86%, rgba(0,0,0,0.86) 94%, rgba(0,0,0,0.96) 98%, rgba(0,0,0,1) 100%);
+    pointer-events: none; z-index: 2;
+  }
+  .paper-hero-text {
+    position: relative; z-index: 3; width: 64%;
+    padding: 44px max(32px, calc((100vw / 0.95 - 1040px) / 2 + 32px)) 44px 8px;
+    color: #ffffff;
+  }
+  .paper-hero-text .cite { color: #ffffff; margin: 0 0 12px; font-size: .92rem; line-height: 1.65; font-weight: 600; }
+  .paper-hero-text .entry-sub { color: rgba(255, 255, 255, 0.8); font-size: .8rem; margin: 0 0 16px; }
+  .paper-hero-text .fields { color: rgba(255, 255, 255, 0.95); font-size: .88rem; margin: 0; }
+  .paper-hero-text .fields ul { margin: 0; padding-left: 1.2em; list-style: disc; }
+  .paper-hero-text .fields li { margin-bottom: 8px; line-height: 1.6; }
+  .paper-hero-text .fields li:last-child { margin-bottom: 0; }
+  .paper-hero-text .k { color: #ffffff; font-weight: 700; }
+
+  .entry-points li.creative-with-img {
+    display: flex; gap: 48px; align-items: flex-start; list-style: none;
+    margin-bottom: 48px; margin-left: -1.15em; padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .entry-points li.creative-with-img .creative-text { flex: 1 1 auto; min-width: 0; }
+  .entry-points li.creative-with-img .creative-thumb {
+    flex: 0 0 300px; width: 300px; height: auto; max-height: 400px;
+    object-fit: cover; border-radius: 10px; border: 1px solid var(--rule);
+    background: var(--chip);
+    box-shadow: 6px 6px 18px rgba(0, 0, 0, 0.12), 3px 3px 6px rgba(0, 0, 0, 0.07);
+  }
+  .entry-points li.creative-with-img .creative-thumb.lg { flex: 0 0 400px; width: 400px; max-height: 520px; }
+  .entry-points li.creative-with-img:last-child { border-bottom: none; margin-bottom: 0; }
+  .creative-text .film-role { display: block; font-weight: 700; font-size: .88rem; margin: 0 0 2px; }
+  .creative-text .film-title { display: block; font-weight: 700; font-size: .88rem; line-height: 1.5; margin-bottom: 2px; }
+  .creative-text .film-subtitle { display: block; font-size: .84rem; font-weight: 400; margin-bottom: 8px; }
+  .creative-text p {
+    position: relative; margin: 0 0 6px; padding-left: 1.1em;
+    font-size: .84rem; line-height: 1.7; text-align: justify; text-justify: inter-word;
+  }
+  .creative-text p::before { content: "•"; position: absolute; left: 0; top: 0; color: var(--fg); }
+  .creative-text p:last-child { margin-bottom: 0; }
+
+  .creative-two-col {
+    display: flex; gap: 48px; list-style: none;
+    margin: 16px 0 20px 0; padding: 0; align-items: stretch;
+  }
+  .creative-two-col:last-child { margin-bottom: 0; }
+  .creative-stacked {
+    flex: 1 1 0; min-width: 0;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .creative-stacked .creative-text { flex: 1 1 auto; margin-bottom: 14px; }
+  .creative-stacked .creative-thumb {
+    flex: 0 0 auto; width: 100%; height: auto; object-fit: contain;
+    border-radius: 10px; border: 1px solid var(--rule); background: var(--chip);
+    margin-left: auto; margin-right: auto;
+    box-shadow: 6px 6px 18px rgba(0, 0, 0, 0.12), 3px 3px 6px rgba(0, 0, 0, 0.07);
+  }
+
+  .entry-points li.creative-hero {
+    position: relative; display: flex; align-items: center; justify-content: flex-end;
+    list-style: none; margin-bottom: 48px; margin-left: -1.15em;
+    border-radius: 12px; overflow: hidden; min-height: 360px;
+    background: #111; padding: 0;
+  }
+  .creative-hero-bg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: 70% center; z-index: 1;
+  }
+  .creative-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to left,
+      rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.88) 35%,
+      rgba(0,0,0,0.72) 55%, rgba(0,0,0,0.4) 75%,
+      rgba(0,0,0,0.12) 90%, rgba(0,0,0,0) 100%);
+    z-index: 2;
+  }
+  .creative-hero-text {
+    position: relative; z-index: 3; width: 42%;
+    margin-right: 90px; padding: 40px 0; color: #ffffff;
+  }
+  .creative-hero-text .film-role { display: block; font-weight: 700; font-size: .88rem; color: #fff; margin: 0 0 2px; padding-left: 12px; }
+  .creative-hero-text .film-title { display: block; font-weight: 700; font-size: 1.15rem; line-height: 1.3; margin-bottom: 3px; padding-left: 12px; color: #fff; }
+  .creative-hero-text .film-subtitle { display: block; font-weight: 500; font-size: .74rem; color: rgba(255,255,255,0.92); margin-bottom: 10px; padding-left: 12px; }
+  .creative-hero-text p {
+    position: relative; margin: 0 0 8px; padding-left: 12px;
+    font-size: .66rem; font-weight: 500; line-height: 1.42;
+    text-align: justify; text-justify: inter-word;
+    color: rgba(255, 255, 255, 0.96);
+  }
+  .creative-hero-text p::before { content: "•"; position: absolute; left: 0; top: 0; color: rgba(255,255,255,0.85); }
+  .creative-hero-text p:last-child { margin-bottom: 0; }
+  .creative-hero-text p.no-bullet::before { content: none; }
+  .creative-hero-text p.hero-link-line { font-size: .6rem; line-height: 1.45; margin-top: 2px; margin-bottom: 2px; }
+  .creative-hero-text p.hero-section-label { font-size: .62rem; font-weight: 700; line-height: 1.4; margin-top: 6px; margin-bottom: 2px; letter-spacing: .02em; }
+  .nowrap { white-space: nowrap; }
+
+  .festival-list { list-style: none; margin: 0; padding: 0; }
+  .festival-list li { padding: 18px 0; border-top: 1px solid var(--rule); font-size: .9rem; line-height: 1.6; }
+  .festival-list li:first-child { padding-top: 0; border-top: none; }
+  .festival-list li:last-child { border-bottom: none; }
+  .festival-list .festival-role { display: block; font-weight: 600; color: var(--fg); font-size: .88rem; }
+  .festival-list .festival-name { display: block; color: var(--fg); margin-top: 2px; }
+  .festival-list .edu-layout { align-items: center; }
+
+  .festival-list li.festival-feature { padding: 0; border-top: none; }
+  .festival-list li.festival-feature + li.festival-feature {
+    margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--rule);
+  }
+  .festival-list li.festival-feature + li:not(.festival-feature) {
+    margin-top: 36px; padding-top: 24px;
+  }
+  .festival-feature-wrap {
+    position: relative; width: 100%; border-radius: 12px; overflow: hidden;
+  }
+  .festival-feature-wrap .festival-feature-bg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center; z-index: 0; display: block;
+  }
+  .festival-feature-wrap .festival-feature-overlay {
+    position: absolute; inset: 0; background: rgba(0, 0, 0, 0.55);
+    pointer-events: none; z-index: 1;
+  }
+  .festival-feature-content {
+    position: relative; z-index: 2; padding: 36px 40px;
+    display: flex; flex-direction: column; justify-content: flex-start;
+    gap: 22px; line-height: 1.5;
+  }
+  .festival-feature-row { display: flex; align-items: center; gap: 22px; flex: 0 0 auto; }
+  .festival-feature-row .edu-logo-wrap {
+    flex: 0 0 96px; width: 96px; height: 96px;
+    border-radius: 50%; overflow: hidden;
+    background: rgba(255,255,255,0.9); border: 1px solid rgba(255,255,255,0.7);
+    position: relative; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  }
+  .festival-feature-row .festival-role {
+    display: block; font-weight: 700; color: #ffffff;
+    font-size: 1.35rem; letter-spacing: .01em; line-height: 1.3;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  }
+  .festival-feature-row .festival-name {
+    display: block; color: #ffffff; margin-top: 4px;
+    font-size: 1.05rem; font-weight: 500;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  }
+  .festival-feature-inner-img {
+    display: block; width: 100%; max-width: 520px; height: auto;
+    margin: 0 auto; border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.30);
+  }
+  .festival-feature-desc {
+    position: relative; margin: 0; padding-left: 1.2em;
+    font-size: .92rem; line-height: 1.65; color: #ffffff;
+    text-align: justify; text-justify: inter-word;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
+  }
+  .festival-feature-desc::before {
+    content: "•"; position: absolute; left: 0; top: 0; color: #ffffff;
+  }
+
+  .news-org { margin: 0 0 14px; font-size: .84rem; font-weight: 700; color: var(--fg); }
+  .news-list { list-style: none; margin: 0; padding: 0; }
+  .news-list li { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 0; font-size: .84rem; line-height: 1.5; }
+  .news-list li .news-text { position: relative; padding-left: 1.1em; flex: 1 1 auto; min-width: 0; text-align: left; }
+  .news-list li .news-text::before { content: "•"; position: absolute; left: 0; top: 0; color: var(--fg); }
+  .news-list li .read-more { flex: 0 0 auto; width: 20px; height: 20px; margin-left: 0; }
+  .news-list li .read-more svg { width: 9px; height: 9px; display: block; }
+
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .rows li { display: flex; align-items: flex-start; gap: 40px; padding: 14px 0; border-top: 1px solid var(--rule); font-size: .9rem; }
+  .rows li:first-child { border-top: none; }
+  .rows li.shift-down { padding-top: 28px; }
+  .rows .row-icon {
+    flex: 0 0 72px; width: 72px; height: 72px;
+    border-radius: 50%; overflow: hidden;
+    background: var(--chip); border: 1px solid var(--rule);
+    position: relative;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+  .rows .row-icon img {
+    position: absolute; top: 50%; left: 50%;
+    width: 100%; height: 100%; object-fit: cover; object-position: center;
+    transform: translate(-50%, -50%);
+  }
+  .rows .row-body {
+    flex: 1 1 auto; min-width: 0;
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 6px 22px; flex-wrap: nowrap;
+  }
+  .rows .row-info { display: flex; flex-direction: column; gap: 2px; flex: 1 1 auto; min-width: 0; }
+  .rows .r-name { font-weight: 600; flex: 1 1 auto; min-width: 0; }
+  .rows .r-sub { font-size: .8rem; color: var(--muted); font-weight: 400; line-height: 1.5; }
+  .rows .course-modules { list-style: disc; margin: 4px 0 0; padding-left: 1.2em; font-size: .84rem; line-height: 1.6; }
+  .rows .course-modules li { margin-bottom: 2px; display: list-item; padding: 0; border: none; gap: 0; }
+  .rows .course-modules li:last-child { margin-bottom: 0; }
+  .rows .r-date { flex: 0 0 auto; color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; white-space: nowrap; padding-top: 2px; }
+
+  .skill-block { padding: 9px 0; }
+  .skill-label { margin: 0 0 4px; font-weight: 700; font-size: .9rem; }
+  .skill-content { margin: 0; font-size: .9rem; line-height: 1.7; }
+
+  .edu-layout { display: flex; gap: 40px; align-items: flex-start; }
+  .edu-logo-wrap {
+    flex: 0 0 72px; width: 72px; height: 72px;
+    border-radius: 50%; overflow: hidden;
+    background: var(--chip); border: 1px solid var(--rule);
+    position: relative;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+  .edu-logo {
+    position: absolute; top: 50%; left: 50%;
+    width: 100%; height: 100%; object-fit: cover; object-position: center;
+    transform: translate(-50%, calc(-50% - 0.87px)) scale(1.414);
+  }
+  .edu-logo-sm { transform: translate(-50%, calc(-50% - 0.87px)) scale(1.1); }
+  .edu-logo-xs { transform: translate(-50%, calc(-50% - 0.87px)) scale(1); }
+  .edu-content { flex: 1 1 auto; min-width: 0; }
+
+  #social-service {
+    width: calc(100vw / 0.95);
+    margin-left: calc(50% - 50vw / 0.95);
+    margin-right: calc(50% - 50vw / 0.95);
+    margin-bottom: -74px;
+    padding: 60px max(32px, calc((100vw / 0.95 - 1040px) / 2 + 32px)) 80px;
+    min-height: calc(100vh - 57px);
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
+      url('https://i.postimg.cc/fTx4hdSk/031c44f380161dde706cca3c4b2746d7.jpg');
+    background-size: cover; background-position: center; background-repeat: no-repeat;
+    color: #ffffff;
+  }
+  #social-service h2 { color: #ffffff; border-bottom: 1px solid rgba(255, 255, 255, 0.28); }
+  #social-service .service-text {
+    margin: 0 0 14px; font-size: 0.82rem; line-height: 1.7;
+    color: #ffffff; text-align: justify; text-justify: inter-word;
+  }
+  #social-service .service-text:last-child { margin-bottom: 0; }
+  #social-service .service-text em { font-style: italic; }
+
+  #social-service .service-row {
+    display: grid; grid-template-columns: 320px minmax(0, 1fr);
+    gap: 32px; align-items: stretch; margin: 0 0 14px;
+  }
+  #social-service .service-row .service-img {
+    width: 100%; height: 100%; display: block;
+    object-fit: cover; object-position: center; border-radius: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.30);
+  }
+  #social-service .service-row .service-text { margin: 0; }
+
+  #projects .entry-points, #projects .entry-points li,
+  #teaching .entry-points, #teaching .entry-points li { text-align: justify; text-justify: inter-word; }
+  #about .bio, #about .entry-points, #about .entry-points li, #about .skill-content { text-align: justify; text-justify: inter-word; }
+  #about .entry-points ul.sub-points, #about .entry-points ul.sub-points li { text-align: justify; text-justify: inter-word; }
+  #awards .entry-points, #awards .entry-points li, #skills .skill-content { text-align: justify; text-justify: inter-word; }
+
+  footer {
+    margin-top: 74px; padding-top: 22px;
+    border-top: 1px solid var(--rule);
+    display: flex; flex-wrap: wrap; justify-content: space-between;
+    gap: 8px 20px; color: var(--muted); font-size: .8rem;
+  }
+
+  @media (max-width: 1200px) {
+    .topnav { flex-wrap: wrap; gap: 8px 24px; justify-content: center; padding: 14px 20px; }
+    .topnav > .nav-logo { position: static; transform: none; font-size: .8rem; margin-right: 8px; }
+  }
+  @media (max-width: 780px) {
+    .hero-card { padding: 24px 22px; }
+    .hero { max-width: 100%; } .bio { max-width: 100%; }
+    .entry-points li.creative-hero { min-height: 320px; align-items: flex-end; margin-left: 0; }
+    .creative-hero-text { width: 100%; margin-right: 0; padding: 22px 20px; }
+    .creative-hero-overlay {
+      background: linear-gradient(to top,
+        rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.78) 45%,
+        rgba(0,0,0,0.28) 80%, rgba(0,0,0,0) 100%);
+    }
+    .entry-points li.creative-with-img { margin-left: 0; }
+    .creative-two-col { flex-direction: column; gap: 32px; margin-left: 0; }
+    .creative-stacked .creative-thumb { width: 100%; height: auto; max-height: none; }
+    .paper-hero { display: block; }
+    .paper-hero-bg { position: static; width: 100%; height: auto; -webkit-mask-image: none; mask-image: none; }
+    .paper-hero-overlay { display: none; }
+    .paper-hero-text { width: 100%; padding: 24px 20px; background: #000; }
+    #social-service .service-row { grid-template-columns: 1fr; gap: 18px; }
+    #social-service .service-row .service-img { height: auto; max-height: 360px; }
+    .festival-feature-content { padding: 24px 26px; gap: 16px; }
+    .festival-feature-row { gap: 18px; }
+    .festival-feature-row .edu-logo-wrap { flex: 0 0 76px; width: 76px; height: 76px; }
+    .festival-feature-row .festival-role { font-size: 1.1rem; }
+    .festival-feature-row .festival-name { font-size: .92rem; }
+    .festival-feature-desc { font-size: .84rem; }
+    .festival-feature-inner-img { max-width: 420px; }
+    .festival-list li.festival-feature + li.festival-feature { margin-top: 16px; padding-top: 16px; }
+    .festival-list li.festival-feature + li:not(.festival-feature) { margin-top: 28px; padding-top: 20px; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 14px; }
+    .wrap { padding: 0 20px 48px; }
+    .hero-bg { padding: 24px 20px 24px; }
+    .hero-card { padding: 20px 18px; }
+    .hero { display: grid; grid-template-columns: 1fr; row-gap: 16px; align-items: stretch; }
+    .hero-left { display: contents; } .hero-right { display: contents; }
+    .hero-avatar { grid-row: 1; justify-self: start; align-self: auto; }
+    .hero-name { grid-row: 2; } .hero-interests { grid-row: 3; }
+    .contact-info { grid-row: 4; } .hero-bio { grid-row: 5; }
+    .avatar-wrap { width: 130px; height: 130px; }
+    h1 .name-zh { display: block; margin: 4px 0 0; font-size: 1.25rem; }
+    .contact-info { white-space: normal; }
+    h1 { font-size: 1.6rem; } h2 { font-size: 1.1rem; }
+    section { margin-top: 44px; }
+    .entry-head { flex-wrap: wrap; } .entry-date { white-space: normal; }
+    .topnav { gap: 6px 16px; padding: 12px 16px; }
+    .topnav > a:not(.nav-logo), .nav-trigger { font-size: .86rem; white-space: normal; }
+    .topnav > .nav-logo { font-size: .8rem; left: 16px; }
+    .topnav > .nav-logo .logo-zh { font-size: .8rem; margin-left: 4px; }
+    .topnav > .nav-logo .logo-crumb .crumb-sep { margin: 0 5px; }
+    .nav-drop-menu { left: 0; transform: none; min-width: 180px; }
+    #social-service { padding: 40px 20px 56px; min-height: calc(100vh - 49px); margin-bottom: -74px; }
+    .edu-layout { flex-direction: column; gap: 16px; }
+    .edu-logo-wrap { flex: 0 0 64px; width: 64px; height: 64px; }
+    .rows li { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .rows li.shift-down { padding-top: 20px; }
+    .rows .row-icon { flex: 0 0 64px; width: 64px; height: 64px; }
+    .rows .row-body { flex-wrap: wrap; width: 100%; }
+    .rows .r-date { white-space: normal; padding-top: 0; }
+    .entry-points li.creative-with-img { flex-direction: column; align-items: flex-start; gap: 18px; margin-bottom: 36px; padding-bottom: 20px; }
+    .entry-points li.creative-with-img .creative-thumb,
+    .entry-points li.creative-with-img .creative-thumb.lg { flex: 0 0 auto; width: 100%; max-width: 320px; max-height: 320px; }
+    .news-list li { flex-wrap: wrap; }
+    .news-list li .read-more { margin-top: 4px; }
+    .festival-feature-content { padding: 16px 18px; gap: 12px; }
+    .festival-feature-row { gap: 12px; align-items: flex-start; }
+    .festival-feature-row .edu-logo-wrap { flex: 0 0 52px; width: 52px; height: 52px; }
+    .festival-feature-row .festival-role { font-size: .92rem; }
+    .festival-feature-row .festival-name { font-size: .8rem; }
+    .festival-feature-desc { font-size: .76rem; }
+    .festival-feature-inner-img { max-width: 100%; }
+    .festival-list li.festival-feature + li.festival-feature { margin-top: 14px; padding-top: 14px; }
+    .festival-list li.festival-feature + li:not(.festival-feature) { margin-top: 22px; padding-top: 16px; }
+  }
+</style>
+</head>
+
+<body>
+  <nav class="topnav" id="topnav">
+    <a class="nav-logo" href="#" aria-label="Junjie LIAN">
+      <span class="logo-name">Junjie LIAN<span class="logo-zh">练俊杰</span></span>
+      <span class="logo-crumb"><span class="crumb-sep">/</span>About Me</span>
+    </a>
+
+    <a href="#" data-target="about" class="active">About Me</a>
+
+    <div class="nav-dropdown" data-group="research">
+      <span class="nav-trigger" data-default="papers">Research</span>
+      <div class="nav-drop-menu">
+        <a href="#" data-target="papers">Papers</a>
+        <a href="#" data-target="projects">Projects</a>
+      </div>
+    </div>
+
+    <div class="nav-dropdown" data-group="practical">
+      <span class="nav-trigger" data-default="teaching">Practical Experience</span>
+      <div class="nav-drop-menu">
+        <a href="#" data-target="teaching">Teaching &amp; Internship</a>
+        <a href="#" data-target="film-tv">Film &amp; Television</a>
+        <a href="#" data-target="film-festival">Film Festival</a>
+        <a href="#" data-target="social-service">Social Service</a>
+      </div>
+    </div>
+
+    <a href="#" data-target="activities">Academic Activities</a>
+
+    <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
+  </nav>
+
+<div class="wrap">
+
+  <!-- About Me -->
+  <div class="page active" id="about">
+    <div class="hero-bg">
+      <div class="hero-card">
+        <header class="hero">
+          <div class="hero-left">
+            <div class="hero-avatar">
+              <span class="avatar-wrap">
+                <img class="avatar" src="https://i.postimg.cc/8cLGv40F/613acdb3bf92d16b0fa352fd0a7e76f4.jpg" alt="Junjie LIAN">
+              </span>
+            </div>
+            <div class="contact-info">
+              <span><span class="ci-label">Location:</span> Guangdong, China</span>
+              <span><span class="ci-label">Email:</span> jun_jie_lian@163.com</span>
+              <span><span class="ci-label">LinkedIn:</span> Junjie LIAN<a class="linkedin-link" href="https://www.linkedin.com/in/junjie-lian-80b246443" target="_blank" rel="noopener" aria-label="LinkedIn profile"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 7.2 L7.2 2.8 M4.2 2.8 H7.2 V5.8"/></svg></a></span>
+              <span><span class="ci-label">Tel:</span> +86 19065334768</span>
+              <span class="cv-row"><a class="cv-chip" href="#" aria-label="Curriculum Vitae">CV</a></span>
+            </div>
+          </div>
+          <div class="hero-right">
+            <div>
+              <div class="hero-name">
+                <h1>Junjie LIAN<span class="name-zh">练俊杰</span></h1>
+                <p class="role">Bachelor of South China Agricultural University (Guangdong, China)</p>
+              </div>
+              <div class="hero-interests">
+                <p class="ri-label">Research Interests:</p>
+                <p class="interests-line">Transnational Cinema / Asian Cinema / Creative Industries / Cultural Memory and Heritage / Film Festival</p>
+              </div>
+            </div>
+            <div class="hero-bio">
+              <p class="bio">My research focuses on the intersection of transnational cinema and Asian cinema, with particular attention to cultural collisions in co-productions and issues of diaspora and the underclass in film. I am currently writing a paper on <em>In-Laws, Out-Laws</em> (2004), a film that straddles the categories of a Hong Kong–Guangdong film co-production and the first southern New Year film in mainland China. Previously, I conducted research on the innovative development of Guangdong-produced films in the new era as part of a provincial social science project.</p>
+              <p class="bio">I also have a strong interest in cultural memory and heritage. I am concurrently advancing research projects on a Singaporean Kopitiam digital interactive theatre and on the identity of female inheritors of the Qiqiao (The Begging Festival) tradition in Zhucun, Guangdong.</p>
+              <p class="bio">I am also a film industry practitioner, currently serving as a script consultant for the feature film The Debater Comes from a County High School. In addition, I am actively involved in film festivals: I serve as a member of the recommendation committee for the FIRST Fantastic Film Festival and have curated the ORBIT Film Festival.</p>
+              <p class="bio">I expect to graduate with my bachelor's degree in 2027. I am currently applying for MPhil and PhD programs.</p>
+            </div>
+          </div>
+        </header>
+      </div>
+    </div>
+
+    <section id="education">
+      <h2>Education</h2>
+      <div class="entry">
+        <div class="edu-layout">
+          <div class="edu-logo-wrap">
+            <img class="edu-logo" src="https://i.postimg.cc/21z8qr34/SCAU-logo.png" alt="South China Agricultural University">
+          </div>
+          <div class="edu-content">
+            <div class="entry-head">
+              <h3 class="entry-title">
+                South China Agricultural University (Guangdong, China)
+                <a class="entry-link" href="https://scau.edu.cn/" target="_blank" rel="noopener" aria-label="Visit SCAU website">
+                  <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 7.2 L7.2 2.8 M4.2 2.8 H7.2 V5.8"/></svg>
+                </a>
+              </h3>
+              <span class="entry-date">Sep. 2023 – Jun. 2027</span>
+            </div>
+            <p class="entry-sub">Double First-Class University</p>
+            <p class="entry-sub">Bachelor of Arts in Broadcasting and Television Directing</p>
+            <ul class="entry-points" style="margin-top:10px;">
+              <li>Mentor: Dr. Zongsheng YUE</li>
+              <li>Core Course GPA: 3.33/5.0</li>
+              <li>Core Course Average Score: 82.25/100</li>
+              <li>
+                Relevant Modules:<br>
+                Fundamentals of Television Technology (98); Creative Communication in Integrated Media (95); Film and Television Adaptation (93);<br>
+                News Gathering and Editing (92.5); Collaborative Production (92.5); TV Interviewing (92.4); Introduction to Media Studies (91.5)
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="courses">
+      <h2>Additional Courses</h2>
+      <ul class="rows">
+        <li>
+          <span class="row-icon"><img src="https://i.postimg.cc/L5Y5Ncn5/60a628d6e35ef409e7943240236a2e79.jpg" alt="University of Maryland"></span>
+          <div class="row-body">
+            <div class="row-info">
+              <span class="r-name">Communication through Social &amp; Digital Media, University of Maryland, College Park (Online)</span>
+              <span class="r-sub">China International Educational Institute International Top-notch Innovative Talent Training Program</span>
+              <ul class="course-modules">
+                <li>Impact of Social Media on Identity and Self-Presentation</li>
+                <li>Digital Activism and Social Change</li>
+                <li>Ethical Dilemmas in Social Media Communication</li>
+              </ul>
+            </div>
+            <span class="r-date">Oct. 2026 – Dec. 2026</span>
+          </div>
+        </li>
+        <li>
+          <span class="row-icon"><img src="https://i.postimg.cc/mrMndJ8Z/8b34106a41e8147d4c42373bc19f26da.jpg" alt="Hong Kong Cinema"></span>
+          <div class="row-body">
+            <div class="row-info">
+              <span class="r-name">Hong Kong Cinema Through a Global Lens, University of Hong Kong (Online)</span>
+              <ul class="course-modules">
+                <li>Bruce Lee and the Global Kung Fu Craze</li>
+                <li>Melodramas of Migration: Mabel Cheung Yuen-Ting's <em>An Autumn's Tale</em></li>
+                <li>John Woo's Heroic Bloodshed Films: Hong Kong vs. Hollywood</li>
+              </ul>
+            </div>
+            <span class="r-date">Mar. 2024 – Apr. 2024</span>
+          </div>
+        </li>
+        <li class="shift-down">
+          <span class="row-icon"><img src="https://i.postimg.cc/Fz2cnWPK/eb2ba9e436e61fed594bf9a829e18962.jpg" alt="Oriental Cinema"></span>
+          <div class="row-body">
+            <div class="row-info">
+              <span class="r-name">Oriental Cinema, Wuhan University (Online)</span>
+              <ul class="course-modules">
+                <li>Taiwan Cinema</li>
+                <li>Hong Kong Cinema</li>
+                <li>Japanese Cinema</li>
+                <li>South Korean Cinema</li>
+                <li>North Korean Revolutionary Cinema</li>
+              </ul>
+            </div>
+            <span class="r-date">Nov. 2023 – Dec. 2024</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section id="awards">
+      <h2>Awards &amp; Honours</h2>
+      <h3 class="group">Film &amp; Media Awards</h3>
+      <ul class="entry-points" style="margin-top:0;">
+        <li>2026 <em>Southern Metropolis Daily</em> Monthly Journalism Award, <em>Mr. AI's Salon: People Making Money with AI</em> (Video Podcast) – Producer</li>
+        <li>2026 Douyin Campus New Charity &amp; Possibility Creation Competition Shortlisted, <em>The Daydreamer</em> – Director</li>
+        <li>2026 SCAU National Security Micro-Video Competition First Prize, <em>The Grain Guardian</em> – Lead Actor</li>
+        <li>2025 Guangdong-Hong Kong-Macao Greater Bay Area University Student Arts Festival First Prize (Film Track), <em>As I Hear It</em> – Producer</li>
+        <li>2025 2nd "National Security in My Eyes" National Short Video Competition National Second Prize, <em>The Grain Guardian</em> – Lead Actor</li>
+      </ul>
+      <h3 class="group">Debate Awards</h3>
+      <ul class="entry-points" style="margin-top:0;">
+        <li>2025 Sustainable Development Youth Creative Debate Tournament – Champion</li>
+        <li>2025 Future Voice World Youth Debate Competition – Second Place</li>
+        <li>2025 Greater Bay Area University Student Tax Debate Invitational – Second Place</li>
+        <li>2025 Shanghai Cup Summer Tournament University Division (Online Zone) – Fourth Place</li>
+        <li>2025 Shidu Chinese Debate League Summer Mingke (Club Track) – Second Place</li>
+        <li>2024 Zhushui Yunshan Guangzhou University Debate Championship – Second Place</li>
+        <li>2024 Shanghai Cup Chinese Debate Championship (Open Division) – Second Place</li>
+        <li>2024 Sustainable Development Creative Debate Tournament (South China Region) – Champion</li>
+        <li>2024 "Qiyuan Cup" University Student Integrity-Themed Debate Invitational (Guangdong University of Finance and Economics)<br>– Second Place &amp; Outstanding Debater</li>
+        <li>2024 2nd Zhaori Cup Online Debate Tournament – Champion</li>
+        <li>2024 2nd Tunan Cup Online Debate Tournament – Second Place</li>
+      </ul>
+      <h3 class="group">Honours</h3>
+      <ul class="entry-points" style="margin-top:0;">
+        <li>2025 SCAU Summer Social Practice Programme Excellent Team (Faculty Level)</li>
+        <li>2023 SCAU College of Arts Excellent League Member</li>
+      </ul>
+    </section>
+
+    <section id="skills">
+      <h2>Languages &amp; Skills</h2>
+      <div class="skill-block">
+        <p class="skill-label">Languages</p>
+        <p class="skill-content">Mandarin (native) | Cantonese (native) | English (proficient)</p>
+      </div>
+      <div class="skill-block">
+        <p class="skill-label">Skills</p>
+        <p class="skill-content">Fieldwork | Semi-structured Interview | Oral History | In-depth Interview | Focus Group Discussion |<br>Autoethnography | Questionnaire Survey | Case Study | Comparative Case Study</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Papers -->
+  <div class="page" id="papers">
+    <h2>Papers</h2>
+    <ul class="paper-list">
+      <li class="paper-hero">
+        <img class="paper-hero-bg" src="https://i.postimg.cc/R0G1dTKY/2c092abde60db946a649871060b728c2.jpg" alt="In-Laws, Out-Laws">
+        <div class="paper-hero-overlay"></div>
+        <div class="paper-hero-text">
+          <p class="cite">
+            Lian, J. (2026). “Looking North” and “Resisting North”: Guangdong–Hong Kong imaginaries in
+            <em>In-Laws, Out-Laws</em>, the first southern New Year film in mainland China.
+            Manuscript under review.
+          </p>
+          <p class="entry-sub">Supervisor: Hui HU, Associate Professor at South China Agricultural University.</p>
+          <div class="fields">
+            <ul>
+              <li><span class="k">Questions:</span> Why did it fare poorly at the Hong Kong box office yet perform relatively well in Guangdong? Why did the “southern” affinity fail to guarantee the success of the Guangdong–Hong Kong film co-production?</li>
+              <li><span class="k">Method:</span> Drew on a cross-cultural production perspective, reconstructed the entire process through close reading and comparison of the television and film texts combined with related interviews and reports, and analyzed it in the contexts of Lunar New Year film development in Hong Kong and mainland China, Raymond Wong’s personal creative trajectory, and other related contexts.</li>
+              <li><span class="k">Key Findings:</span> For Hong Kong, not only the “North”, but also the “South” is the Other who is being looked up to and needed to resist. As far as Guangdong is concerned, it has completed a psychological imagination of “identity reversal” in the film, but such an imagination is still not separated from Hong Kong as a reference system, reflecting complex identity anxiety.</li>
+              <li><span class="k">Innovation:</span> Refined the concept of the mainland to the south of the mainland and the north of the mainland, and provided another analytical path for understanding Hong Kong-ness in the co-productions. And filled the research gap of the southern New Year film in mainland China.</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="paper-hero">
+        <img class="paper-hero-bg" src="https://i.postimg.cc/hPr9cr3R/c795dc5717e81095e325f722fdb5fccb.jpg" alt="Motivation, practices and space of wander">
+        <div class="paper-hero-overlay"></div>
+        <div class="paper-hero-text">
+          <p class="cite">Lian, J. (2026). Motivation, practices and space of wander in Zhang Lü’s and Hong Sang-soo’s films. Manuscript under review.</p>
+          <div class="fields">
+            <ul>
+              <li><span class="k">Questions:</span> How do the differences in the wanderer’s motivations, practices, and spaces between the Korean-Chinese director and the South Korean director reflect aspects of the experience of modernity in East Asian cinema?</li>
+              <li><span class="k">Method:</span> Taking <em>Dooman River</em>, <em>Night and Day</em>, and other representative films as texts for comparison, this study comprehensively employs interdisciplinary perspectives from film studies, cultural studies, and other fields to conduct an analysis.</li>
+              <li><span class="k">Key Findings:</span> Zhang Lü’s films point to a tracing of the past and present a profound sense of history. Hong Sang-soo’s films arise from present desires and manifest an isomorphism between daily space and ethical boundaries. These constitute two forms of the experience of “homelessness” in East Asian cinema: one is “historical homelessness,” and the other is “everyday homelessness.”</li>
+              <li><span class="k">Innovation:</span> This study enriched the comparative map of experiences of cinematic modernity in East Asia.</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Projects -->
+  <div class="page" id="projects">
+    <h2>Projects</h2>
+    <h3 class="group line-under">Film Track</h3>
+    <div class="entry no-border-top">
+      <div class="entry-head">
+        <h3 class="entry-title">Research on the Innovative Development of Guangdong-produced Film and Television Dramas in the New Era</h3>
+        <span class="entry-date">Jul. 2025 – Present</span>
+      </div>
+      <p class="entry-sub">Regular Project of the Guangdong Provincial Philosophy and Social Sciences Planning Programme<br>Supervisor: Hui HU, Associate Professor at South China Agricultural University.</p>
+      <ul class="entry-points">
+        <li><span class="k">Synopsis</span><br>This project investigates representative cases of Guangdong-produced film and television dramas from 2012 to 2024 and analyzes their innovative development strategies to provide practical references for their future high-quality development.</li>
+        <li><span class="k">Main Contributions</span>
+          <ul class="sub-points">
+            <li>Analyzed the official promotional accounts of 12 works and found that, beyond thematic expression, some works similarly suffered from the predicament of “placelessness” in platform dissemination, mainly manifested in fragmentation and self-ossification. It addressed the issue of strong consumer demand and weak production capacity from a communication perspective.</li>
+            <li>Reviewed the current state of research and policy documents, identified existing research gaps, and led the drafting of the literature review, thereby delineating the project’s entry point and innovative direction.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <h3 class="group line-under">Cultural Heritage &amp; Other Tracks</h3>
+    <div class="entry no-border-top">
+      <div class="entry-head">
+        <h3 class="entry-title">A Digital Interactive Theatre of Cultural Artefacts Set in the Singaporean Kopitiam</h3>
+        <span class="entry-date">Sep. 2026 – Present</span>
+      </div>
+      <p class="entry-sub">Interdisciplinary Self-Organizing Cultural Relics Research Project.</p>
+      <ul class="entry-points">
+        <li><span class="k">Synopsis</span><br>This project uses the digital interactive theatre to make cultural relics perceptible rather than constructed, to show their autonomy. The scene is set in the Singaporean Kopitiam, a coffee shop, to discuss the relationships between migration, labor, and public space. It is currently in the narrative-building stage.</li>
+        <li><span class="k">Main Contributions</span>
+          <ul class="sub-points">
+            <li>Reviewed the literature and organized existing museum collection records and other materials, placed coffee shops back into colonial trade and other structures for examination, avoided obfuscation by nostalgic narratives, and narrowed the topic no longer too broad.</li>
+            <li>Started from questions such as “which objects might appear in the same scene,” refined the selection criteria, proposed a method of linking stories through core objects, solved the problem of fragmented stories caused by too many objects, and advanced the project to the verification stage of “which objects are related to one another.”</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head">
+        <h3 class="entry-title">Kunqu Opera Multimodal Database and Quantitative Transcoding Theory (Kunyuan)</h3>
+        <span class="entry-date">Aug. 2026 – Sep. 2026</span>
+      </div>
+      <p class="entry-sub">Project of the School of Arts and the Computational Arts Lab, Peking University<br>Supervisor: Wang Delong, Assistant Research Fellow and Boya Postdoctoral Fellow, School of Arts, Peking University.</p>
+      <ul class="entry-points">
+        <li><span class="k">Synopsis</span><br>This project aims to construct a multimodal dataset, especially text-track alignment and annotation, establishing precise temporal alignment between lyrics and audio recordings. It is designed to support subsequent development of AI agents for Kunqu Opera.</li>
+        <li><span class="k">Main Contributions</span>
+          <ul class="sub-points">
+            <li>Addressed the issue of low-quality samples degrading model training in corpus construction by auditing approximately 45 hours of audio recordings, annotating vocal truncation, background noise, and related defects, and delivering a quality report.</li>
+            <li>Reviewed over 200 contested samples involving overlapping audio and vocal mode classifications, contributing to the refinement of annotation guidelines and promoting greater consistency in annotation adjudication.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head">
+        <h3 class="entry-title">Preserving the Lineage in Images: Visual Fieldwork on the Qiqiao Intangible Cultural Heritage in Zhucun, Guangdong</h3>
+        <span class="entry-date">Jul. 2026 – Present</span>
+      </div>
+      <p class="entry-sub">Postgraduate Education Innovation Project, South China Agricultural University<br>Supervisor: Difei TANG, Associate Professor at South China Agricultural University.</p>
+      <ul class="entry-points">
+        <li><span class="k">Synopsis</span><br>This project examines how female inheritors of the Qiqiao customs of the Pan lineage acquire legitimacy within the lineage system and conversely reshape it. Through the perspective of emotional politics and aesthetic labour, the project invites them to co-create audiovisual archives, thereby exploring the mechanisms of their cultural identity.</li>
+        <li><span class="k">Main Contributions</span>
+          <ul class="sub-points">
+            <li>Took charge of writing the literature review and compiling folklore materials during the application stage, and assisted the team in establishing a community-based participatory research methodology.</li>
+            <li>Conducted four preliminary field visits, interviewed 12 individuals informally, pre-interviewed seven individuals, and led the development of a strategy focused on “building rapport with key internal informants and preliminary participatory observation,” successfully inviting four female inheritors to participate in the co-creation of video archives.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head">
+        <h3 class="entry-title">A Study on the Practical Path of Speculative Education in County-Level High Schools Based on Autoethnography</h3>
+        <span class="entry-date">Jul. 2025 – Present</span>
+      </div>
+      <p class="entry-sub">2025–2026 Guangdong Youth College Students' Vanguard Campaign for the “Hundred, Thousand, Ten Thousand Project”.</p>
+      <ul class="entry-points">
+        <li><span class="k">Synopsis</span><br>This project employs autoethnography to explore the practical pathways of quality-oriented education in a county-level high school, from the perspective of an individual as a debate team coach, the protagonist of the <em>Southern Weekly</em> feature article “The Best Debater Comes from an Unknown County High School”, and a six-year team member. The paper is currently being prepared.</li>
+        <li><span class="k">Main Contributions</span>
+          <ul class="sub-points">
+            <li>Conducted an approximately 8,000-word retrospective reflection based on relevant competition preparation materials, social media activity, and other data from 2017 to 2026, integrated life course theory and role theory to reflect on typical cases such as the public opinion storm triggered by coverage, and reached conclusions including coach turnover and other factors constraining the development.</li>
+            <li>Conducted informal conversations with more than 30 individuals, including former team members, faculty advisors, and debaters from other schools, and gathered their views on the same events or relationships, to form a multi-perspective comparison.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Teaching & Internship -->
+  <div class="page" id="teaching">
+    <h2>Teaching &amp; Internship</h2>
+    <h3 class="group line-under">Teaching Experience</h3>
+    <div class="entry no-border-top">
+      <div class="edu-layout">
+        <div class="edu-logo-wrap"><img class="edu-logo edu-logo-sm" src="https://i.postimg.cc/yNq8DJd0/84a711bce9875a2fa2fea76536560d00.jpg" alt="YIFENG Media Education"></div>
+        <div class="edu-content">
+          <div class="entry-head">
+            <h3 class="entry-title">Teaching Assistant</h3>
+            <span class="entry-date">Oct. 2024</span>
+          </div>
+          <p class="entry-sub entry-company">YIFENG Media Education (Department of Theater, Film, and Television Directing)</p>
+          <p class="entry-sub">Governing Unit of the China Film and Television College Entrance Examination Training Alliance</p>
+          <ul class="entry-points">
+            <li>Marked coursework assignments and provided after-class academic tutoring and over 10 hours of evening self-study tutoring for 10 students.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <h3 class="group line-under">Internship Experience</h3>
+    <div class="entry no-border-top">
+      <div class="edu-layout">
+        <div class="edu-logo-wrap"><img class="edu-logo edu-logo-xs" src="https://i.postimg.cc/NMjqFY1Z/5f0b1a81cd62589def8c7c46c7d8b2fd.jpg" alt="Pearl River Film Group"></div>
+        <div class="edu-content">
+          <div class="entry-head">
+            <h3 class="entry-title">Production Center Intern</h3>
+            <span class="entry-date">Jul. 2026 – Present</span>
+          </div>
+          <p class="entry-sub entry-company">Pearl River Film Group (Guangdong, China)</p>
+          <ul class="entry-points">
+            <li>Assist in the incubation of the music film <em>Fame Before Forty</em>, including script outline revision, material compilation, and other related tasks.</li>
+            <li>Present comparative analyses of domestic and international music film case studies during internal project meetings, providing the creative team with diverse reference frameworks for genre conventions, narrative structures and production models.</li>
+            <li>Synthesise and organise extensive cross-media resources, and systematically map the developmental trajectory of Guangdong's popular music culture since the reform and opening-up, offering historical and cultural contextual support for the project's narrative development.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="edu-layout">
+        <div class="edu-logo-wrap"><img class="edu-logo edu-logo-sm" src="https://i.postimg.cc/QxTLHfWm/6b4a63e55fa9685d792523b0b715a9aa.jpg" alt="Southern Metropolis Daily"></div>
+        <div class="edu-content">
+          <div class="entry-head">
+            <h3 class="entry-title">AIGC Training Centre Intern</h3>
+            <span class="entry-date">Apr. 2026 – Sep. 2026</span>
+          </div>
+          <p class="entry-sub entry-company">Southern Metropolis Daily (Guangdong, China)</p>
+          <ul class="entry-points">
+            <li>Managed full-cycle editing of short videos for the “Mr.AI Li Hao” IP matrix, producing 37 videos with cumulative views exceeding 2 million, several of which have individually surpassed 200,000 views. Served as the director of the livestream interview series <em>Mr.AI Reception Room</em>.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="edu-layout">
+        <div class="edu-logo-wrap"><img class="edu-logo edu-logo-xs" src="https://i.postimg.cc/k44z9sm0/f8f5de6ff6417ab1fd1b2152b159a451.jpg" alt="NetEase"></div>
+        <div class="edu-content">
+          <div class="entry-head">
+            <h3 class="entry-title">Content Production Intern</h3>
+            <span class="entry-date">Jan. 2026 – Apr. 2026</span>
+          </div>
+          <p class="entry-sub entry-company">NetEase (Guangdong, China)</p>
+          <ul class="entry-points">
+            <li>Produced the viral AI comic drama <em>National Fate: Are You Kidding? You Call This Wilderness Survival?</em>, which achieved 51.68 million views and ranked No. 1 on the platform’s male-oriented content chart. Provided feedback on storyline and character development.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="edu-layout">
+        <div class="edu-logo-wrap"><img class="edu-logo edu-logo-xs" src="https://i.postimg.cc/j5F9jfqn/c7aff0f1a23ebf10f9f53d886502cdac.jpg" alt="Guangdong South International Media Advertising"></div>
+        <div class="edu-content">
+          <div class="entry-head">
+            <h3 class="entry-title">New Media Operations Intern</h3>
+            <span class="entry-date">Jun. 2025 – Jul. 2025</span>
+          </div>
+          <p class="entry-sub entry-company">Guangdong South International Media Advertising Co., Ltd. (Guangdong, China)</p>
+          <ul class="entry-points">
+            <li>Built the “Southern Yi’antang” new media presence from the ground up. And served as an executive producer for the 2025 QQ Speed × Qingyuan Gulong Canyon advertisements. Also planned the Rejoice &amp; Lotus Supermarket “Variety Show” offline promotional event.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="edu-layout">
+        <div class="edu-logo-wrap"><img class="edu-logo edu-logo-sm" src="https://i.postimg.cc/9Xvm8Rd6/9f27d9dd881008c04598fd2085e60364.jpg" alt="ZAKER"></div>
+        <div class="edu-content">
+          <div class="entry-head">
+            <h3 class="entry-title">New Media Operations Intern</h3>
+            <span class="entry-date">Jun. 2024 – Aug. 2024</span>
+          </div>
+          <p class="entry-sub entry-company">ZAKER (Guangdong, China)</p>
+          <ul class="entry-points">
+            <li>Worked on the Cantonese opera documentary <em>My Manifesto – The Female Warrior’s Tale</em> for the Guangzhou Cultural Centre.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Film & Television -->
+  <div class="page" id="film-tv">
+    <h2>Film &amp; Television</h2>
+    <h3 class="group">Feature Film</h3>
+    <ul class="entry-points" style="margin-top:0;">
+      <li class="creative-hero">
+        <img class="creative-hero-bg" src="https://i.postimg.cc/7YL1m14j/5dec09b22e26ab075107c134580ff571.png" alt="Best Debater from a County High School">
+        <div class="creative-hero-overlay"></div>
+        <div class="creative-hero-text">
+          <span class="film-role">Script Consultant</span>
+          <span class="film-title"><em>Best Debater from a County High School</em> (expected to be shot in 2027)</span>
+          <span class="film-subtitle">Guangdong Aimei Film and Television Co., Ltd.</span>
+          <p>Provided script guidance and advisory feedback, offering professional input on narrative structure, character development and thematic expression.</p>
+          <p>Directed by Xu Yizhou, a Chinese screenwriter whose filmography includes <em>Take Off</em> (2026) and <em>It’s My Time</em> (2026). It is adapted from the <em>Southern Weekly</em> feature article. The film centres on rural high school students competing in an international Chinese-language debate tournament.</p>
+          <p>The film script has currently passed the archival filing with the China Film Administration.<a class="hero-link-btn" href="https://www.chinafilm.gov.cn/dybalxgs/202503/t20250326_888682.html" target="_blank" rel="noopener" aria-label="Read more"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 7.2 L7.2 2.8 M4.2 2.8 H7.2 V5.8"/></svg></a></p>
+        </div>
+      </li>
+    </ul>
+    <h3 class="group">Short Film</h3>
+    <ul class="entry-points" style="margin-top:0;">
+      <li class="creative-hero">
+        <img class="creative-hero-bg" src="https://i.postimg.cc/zXSxrNpF/9587d692c0080e40b06b2328f25b070f.jpg" alt="Leap Beyond">
+        <div class="creative-hero-overlay"></div>
+        <div class="creative-hero-text">
+          <span class="film-role">Production Assistant</span>
+          <span class="film-title">AIGC Experimental Short Film <em>Leap Beyond</em> <span class="nowrap">(2026)</span></span>
+          <span class="film-subtitle">BNU-HKBU United International College</span>
+          <p>Centered on parkour, this short film integrates live-action footage with AIGC image generation technology. Drawing on visual elements such as the cosmos, meteorites, and futuristic space, it showcases the speed, power, body control, and spirit of breaking through limits inherent in parkour.</p>
+          <p>Selected for the 22nd Beijing International Sports Film Week (2026).</p>
+          <p class="hero-section-label">Campus News</p>
+          <p class="hero-link-line no-bullet">
+            The Future Is Here! BNBU Student Works Shine at Beijing International Sports Film Week 学校报道：未来已来！BNBU学生作品闪耀北京国际体育电影周
+            <a class="hero-link-btn" href="https://mp.weixin.qq.com/s/3LJ1ukh01XkGTbiLsk3-xg" target="_blank" rel="noopener" aria-label="Read more"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 7.2 L7.2 2.8 M4.2 2.8 H7.2 V5.8"/></svg></a>
+          </p>
+        </div>
+      </li>
+    </ul>
+    <ul class="creative-two-col">
+      <li class="creative-stacked">
+        <div class="creative-text">
+          <span class="film-role">Producer</span>
+          <span class="film-title">Short Film <em>As I Hear It</em> (2025)</span>
+          <span class="film-subtitle">South China Agricultural University</span>
+          <p>2025 GBA University Student Arts Festival First Prize.</p>
+        </div>
+        <img class="creative-thumb" src="https://i.postimg.cc/sgDYHYRW/a39244a720cb17f548cfa90fbbada6cd.jpg" alt="As I Hear It">
+      </li>
+      <li class="creative-stacked">
+        <div class="creative-text">
+          <span class="film-role">Executive Producer</span>
+          <span class="film-title">Narrative Short Film <em>Doomsday Carnival</em> (2024)<a class="title-link" href="https://www.bilibili.com/video/BV1bQkiYAERK/?spm_id_from=333.337.search-card.all.click" target="_blank" rel="noopener" aria-label="Watch on Bilibili"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 7.2 L7.2 2.8 M4.2 2.8 H7.2 V5.8"/></svg></a></span>
+          <span class="film-subtitle">South China Agricultural University</span>
+        </div>
+        <img class="creative-thumb" src="https://i.postimg.cc/25ppjBwK/f1961a8baa31852c7c4ba7426f334a58.jpg" alt="Doomsday Carnival">
+      </li>
+    </ul>
+    <ul class="creative-two-col">
+      <li class="creative-stacked">
+        <div class="creative-text">
+          <span class="film-role">Art Assistant</span>
+          <span class="film-title">Narrative Short Film <em>When the Wheels Turn</em>（2023）</span>
+          <span class="film-subtitle">Jinan University MFA Collaborative Film Project</span>
+        </div>
+        <img class="creative-thumb" src="https://i.postimg.cc/RV5h0KCP/aeb6f41fc20fb3f1b2b61015bc3b18e3.jpg" alt="When the Wheels Turn">
+      </li>
+      <li class="creative-stacked">
+        <div class="creative-text">
+          <span class="film-role">Assistant Director</span>
+          <span class="film-title">Narrative Short Film <em>Even Wandering</em> (2023)</span>
+          <span class="film-subtitle">Zhujiang College, South China Agricultural University</span>
+        </div>
+        <img class="creative-thumb" src="https://i.postimg.cc/8cDhM3Bc/d831061da7c60bc4ce3c6d77ce0d1ab2.jpg" alt="Even Wandering">
+      </li>
+    </ul>
+    <h3 class="group">AI Comic Drama</h3>
+    <ul class="entry-points" style="margin-top:14px;">
+      <li class="creative-with-img">
+        <div class="creative-text">
+          <span class="film-title"><em>National Fate: Are You Kidding? You Call This Wilderness Survival</em> (2026)</span>
+          <span class="film-subtitle">NetEase</span>
+          <p>Achieved 51.68 million views and ranked No. 1 on the NetEase Da Shen's male-oriented content chart.</p>
+        </div>
+        <img class="creative-thumb lg" src="https://i.postimg.cc/kghcHKb5/8462aa0aa44191f7e9302b66784e7791.jpg" alt="National Fate">
+      </li>
+    </ul>
+    <h3 class="group">Micro Variety Show</h3>
+    <ul class="entry-points" style="margin-top:0;">
+      <li class="creative-with-img">
+        <div class="creative-text">
+          <span class="film-role">Follow Director</span>
+          <span class="film-title">Eggy Life Experience Challenge (2026)<a class="title-link" href="https://v.douyin.com/S3NNXp_0CFc/" target="_blank" rel="noopener" aria-label="Watch on Douyin"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 7.2 L7.2 2.8 M4.2 2.8 H7.2 V5.8"/></svg></a></span>
+          <span class="film-subtitle">NetEase · Eggy Party</span>
+          <p>Followed 2 guests, compiled the field notes to provide narrative threads and emotional annotations for post-production editing, and achieved a 60% adoption rate.</p>
+        </div>
+        <img class="creative-thumb lg" src="https://i.postimg.cc/K8h56q9J/028230bebe564aad9fb35b250e7de3ae.jpg" alt="Eggy Life Experience Challenge">
+      </li>
+    </ul>
+    <h3 class="group">Video Podcast</h3>
+    <ul class="entry-points" style="margin-top:0;">
+      <li class="creative-with-img">
+        <div class="creative-text">
+          <span class="film-role">Project Intern</span>
+          <span class="film-title">Aputure Star Podcast (2026)</span>
+          <span class="film-subtitle">Aputure</span>
+          <p>Produced content for 2 episodes, handled distribution across RED, Douyin, and WeChat Channels, and created 12 clips, one of which exceeded 100,000 views.</p>
+        </div>
+        <img class="creative-thumb lg" src="https://i.postimg.cc/bNx6wfSM/2bfbd68608a0a8a57ea3ffed6fa042e8.jpg" alt="Aputure Star Podcast">
+      </li>
+    </ul>
+    <h3 class="group">News</h3>
+    <p class="news-org">Officer of Xinhe Converged Media Studio, South China Agricultural University</p>
+    <ul class="news-list">
+      <li>
+        <span class="news-text">Top 10 Books Most Loved by SCAUers in 2024: Have You Read Any of Them? 华农人最爱读的10本书，有你看过的吗？</span>
+        <a class="read-more" href="https://mp.weixin.qq.com/s/nkTd3EWrdjE6meh8y0cnPQ" target="_blank" rel="noopener" aria-label="Read more"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 7.2 L7.2 2.8 M4.2 2.8 H7.2 V5.8"/></svg></a>
+      </li>
+      <li>
+        <span class="news-text">Guangdong Wildlife Specimen and Scientific Illustration Exhibition Held at SCAU 广东省野生动植物标本和科学画展在我校举办</span>
+        <a class="read-more" href="https://xcb.scau.edu.cn/2024/0509/c9837a374100/page.htm" target="_blank" rel="noopener" aria-label="Read more"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 7.2 L7.2 2.8 M4.2 2.8 H7.2 V5.8"/></svg></a>
+      </li>
+      <li>
+        <span class="news-text">Results Announced! The 4th "Huanong Cup" Short Video Creation Competition Concludes Successfully 结果公布！第四届"华农杯"短视频创作大赛完美收官</span>
+        <a class="read-more" href="https://mp.weixin.qq.com/s/QFqF6wbg1ps5G3dU8dhbYg" target="_blank" rel="noopener" aria-label="Read more"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 7.2 L7.2 2.8 M4.2 2.8 H7.2 V5.8"/></svg></a>
+      </li>
+      <li>
+        <span class="news-text">Cool Down This Summer, Splash It Out in the Pool! 清凉一夏，泳池争霸！</span>
+        <a class="read-more" href="https://mp.weixin.qq.com/s/hILi81gMNSHl3HgO0KOX-Q" target="_blank" rel="noopener" aria-label="Read more"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 7.2 L7.2 2.8 M4.2 2.8 H7.2 V5.8"/></svg></a>
+      </li>
+      <li>
+        <span class="news-text">Gen Z College Students Land Internships Just Like That: Fresh and Effortless! "00后"大学生实习，就这么水灵灵地上岸！</span>
+        <a class="read-more" href="https://mp.weixin.qq.com/s/YkdLZKhBEpsdeJKaJ52lqg" target="_blank" rel="noopener" aria-label="Read more"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 7.2 L7.2 2.8 M4.2 2.8 H7.2 V5.8"/></svg></a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Film Festival -->
+  <div class="page" id="film-festival">
+    <h2>Film Festival</h2>
+    <ul class="festival-list">
+      <li class="festival-feature">
+        <div class="festival-feature-wrap">
+          <img class="festival-feature-bg" src="https://i.postimg.cc/pXxSzVLR/489ec54c32d91d0586f249dcf93786aa.jpg" alt="2026 FIRST Discovery Film Festival background">
+          <div class="festival-feature-overlay"></div>
+          <div class="festival-feature-content">
+            <div class="festival-feature-row">
+              <div class="edu-logo-wrap"><img class="edu-logo edu-logo-sm" src="https://i.postimg.cc/SN18yjB0/bb61b8710fc83b64d50bb6f6a26859e4.jpg" alt="FIRST Discovery Film Festival"></div>
+              <div class="edu-content">
+                <span class="festival-role">Recommendation Committee Member</span>
+                <span class="festival-name">2026 FIRST Discovery Film Festival</span>
+              </div>
+            </div>
+            <img class="festival-feature-inner-img" src="https://i.postimg.cc/7Z2LpN0t/d51bd4b13f1ed093a5e0925d80b27a82.jpg" alt="FIRST Discovery Film Festival">
+            <p class="festival-feature-desc">Voted on Chinese genre films for the annual “Discovery Selection” section, providing independent evaluations and recommendations for shortlisted works while contributing written feedback on programming trends, section curation and genre development directions through committee surveys and open consultations, and assisting in enriching the sampling dimensions of the annual Genre Film Annual Observation report with market-informed insights.</p>
+          </div>
+        </div>
+      </li>
+      <li class="festival-feature">
+        <div class="festival-feature-wrap">
+          <img class="festival-feature-bg" src="https://i.postimg.cc/85wS9ZwV/acb0915abfa7e1ba32108ac1aa5cf366.jpg" alt="2026 FIRST Active Screening Programme background">
+          <div class="festival-feature-overlay"></div>
+          <div class="festival-feature-content">
+            <div class="festival-feature-row">
+              <div class="edu-logo-wrap"><img class="edu-logo edu-logo-sm" src="https://i.postimg.cc/rFfGKfrV/8b4d14d2729ed4184d2bb53cef144f55.jpg" alt="FIRST Active Screening Programme"></div>
+              <div class="edu-content">
+                <span class="festival-role">Curator</span>
+                <span class="festival-name">2026 FIRST Active Screening Programme · South China Agricultural University Station</span>
+              </div>
+            </div>
+            <img class="festival-feature-inner-img" src="https://i.postimg.cc/rwDvg8vk/de5961c18aa9fe8aabf9eace9e626f4d.jpg" alt="FIRST Active Screening Programme">
+            <p class="festival-feature-desc">Led the curation and implementation of the largest student-organised film exhibition in South China for 2026, delivering nine screenings and multiple public events while developing the theme “Ignite the Ice” and collaborating with vivo on the short film programme “Become the Flame’s Outer Edge”.</p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="edu-layout">
+          <div class="edu-logo-wrap"><img class="edu-logo edu-logo-sm" src="https://i.postimg.cc/4yLKNFSR/9c6bae6a74bac04d1667483797691956.jpg" alt="ORBIT Youth Film Festival"></div>
+          <div class="edu-content">
+            <span class="festival-role">Market Centre Member</span>
+            <span class="festival-name">2026 ORBIT Youth Film Festival</span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="edu-layout">
+          <div class="edu-logo-wrap"><img class="edu-logo edu-logo-sm" src="https://i.postimg.cc/g0Vn60Tq/3e0a879740bc3aa3a7c94d23517d74dc.jpg" alt="Golden Train Awards Ceremony"></div>
+          <div class="edu-content">
+            <span class="festival-role">Curator</span>
+            <span class="festival-name">2026 South China Agricultural University Alumni Media Industry Association Inaugural Event &amp; Golden Train Awards Ceremony</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Social Service -->
+  <div class="page" id="social-service">
+    <h2>Social Service</h2>
+    <div class="service-row">
+      <img class="service-img" src="https://i.postimg.cc/gkrBdhCv/7dd526b550b8d96835094583db5206ba.jpg" alt="Youth debate education">
+      <p class="service-text">As a debater with nine years of experience, and a graduate of a county high school in Zhaoqing, Guangdong Province, China, I have been dedicated to developing youth debate education in remote areas since 2023, striving to make debate less elitist. I believe critical thinking should not be the cultural capital of a specific class but an intellectual resource accessible to every young person. Through the Guangdong Province Three Goes to the Countryside social practice program, I connected university debate teams in Guangdong with three middle schools in Guangning County, providing debate training to their students. Additionally, I served as a debate coach for four high schools in Zhaoqing, guiding them to more than 20 achievements, including runner up in the Guangdong Provincial Youth Chinese Debate Championship, gold award in the Chinese Debate World Cup, and third place in the Nanhai Cup International Chinese Debate Invitational Tournament for Primary and Secondary School Students.</p>
+    </div>
+    <p class="service-text">In practice, I found that the high registration fees for current middle school debate competitions essentially constitute a hidden entry barrier. Students from economically underdeveloped regions have long been excluded from high quality competitions. Even when they access excellent learning resources through the internet, their visibility and pathways for advancement remain extremely limited. Therefore, in 2025 I founded the Nanyun Cup International Middle School Chinese Debate Championship and established a separate division for economically underdeveloped regions. Over two editions, it has attracted twenty teams, including teams from Guangxi, Guizhou, and other underdeveloped provinces in China.</p>
+    <p class="service-text">Furthermore, as a film studies researcher, I fully recognize that film, as a cultural practice, possesses a public participatory quality. It can respond to public social issues and help drive social progress. I facilitated the film and television rights cooperation for the renowned <em>Southern Weekly</em> feature article <em>The Best Debater Comes from an Unknown County High School</em>. This feature article documented the journey of a group of county high school students from Guangning County who overcame numerous obstacles to reach an international debate stage. The film is scheduled to begin shooting in 2027, directed by Xu Yizhou, the screenwriter of <em>Take Off</em> (2026), a film that was selected for the main competition of the 38th Tokyo International Film Festival. In this project, I serve as a script consultant. In addition to providing technical guidance on the debate sections, I have contributed suggestions from the perspectives of film narrative and literary expression, translating my professional training into concrete creative practice. This is consistent with the goal I have long pursued: to let the voices of marginalized groups be heard and to bring subjects excluded from dialogue back into the conversation.</p>
+  </div>
+
+  <!-- Academic Activities -->
+  <div class="page" id="activities">
+    <section id="academic-activities">
+      <div class="entry">
+        <div class="entry-head"><h3 class="entry-title">Presenter</h3><span class="entry-date">Nov. 2026</span></div>
+        <p class="entry-sub">"New Visions in Film, Cultivating the Future" Forum on Film Criticism and Humanistic General Education</p>
+        <p class="entry-desc">A 12-minute presentation will be delivered on the topic "Soundscape Construction and the Generation of Imagination: A Study of Film Podcasts from the Perspective of New Forms of Literature and Art for the General Public," discussing how podcast media reconstruct the publicness, affectivity, and educational function of film criticism, and thereby proposing new pathways for film criticism and humanistic general education within the audio media ecosystem.</p>
+      </div>
+      <div class="entry">
+        <div class="entry-head"><h3 class="entry-title">Organizer</h3><span class="entry-date">May 2026</span></div>
+        <p class="entry-sub">FIRST Active Screenings: How AI Is Reshaping the Ontology, Methods, and Expression of Short Short Film (Online)</p>
+        <p class="entry-desc">Invited the directors of the short short film and other professionals to discuss topics including creative workflow, authorship and the dissemination ecosystem. This was the first conference to address the intersection of AIGC and short short films.</p>
+      </div>
+      <div class="entry">
+        <div class="entry-head"><h3 class="entry-title">Participant</h3><span class="entry-date">Sep. 2026</span></div>
+        <p class="entry-sub">Insights from Cultural Exception, Film Policy, Theory and Communication (Guangdong, China)</p>
+        <p class="entry-desc">Prompted by debates on the “construction of an autonomous knowledge system for Chinese film studies,” reconsidered whether “critical transnationalism,” previously used in the RP on Guangdong–Hong Kong co-productions, still relies on Western theories for secondary validation, and whether “Chinese exceptionalism” risks cultural essentialism. Incorporated diaspora and power asymmetry as analytical dimensions and addressed the limitation that it still takes the nation-state as its unit of analysis. Proposed “critical cross-border regionalism.”</p>
+      </div>
+      <div class="entry">
+        <div class="entry-head"><h3 class="entry-title">Presenter</h3><span class="entry-date">Jul. 2024</span></div>
+        <p class="entry-sub">Cloud Tour · East China Debate Invitational, CHD Debate (Zhenjiang, China)</p>
+        <p class="entry-desc">Drew on the perspective of embodied spectatorship to discuss “screen photography” during the Spring Festival film season, explored the tension between its role as an extension of bodily cinematic experience and the destruction and re-establishment of embodied co-presence.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <span>© 2026 Junjie Lian</span>
+    <span>Last updated: Oct. 2026</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var topnav = document.getElementById('topnav');
+  var indicator = document.getElementById('navIndicator');
+  var pages = document.querySelectorAll('.page');
+  var dropdowns = document.querySelectorAll('.nav-dropdown');
+  var ZOOM = 0.95;
+
+  var logoCrumb = document.querySelector('.nav-logo .logo-crumb');
+  var pageTitles = {
+    'about': 'About Me',
+    'papers': 'Papers',
+    'projects': 'Projects',
+    'teaching': 'Teaching & Internship',
+    'film-tv': 'Film & Television',
+    'film-festival': 'Film Festival',
+    'social-service': 'Social Service',
+    'activities': 'Academic Activities'
+  };
+
+  function updateBreadcrumb(targetId) {
+    var title = pageTitles[targetId];
+    if (title) {
+      logoCrumb.innerHTML = '<span class="crumb-sep">/</span>' + title;
+    } else {
+      logoCrumb.innerHTML = '';
+    }
+  }
+
+  function getNavElementFor(targetId) {
+    var direct = document.querySelector('.topnav > a[data-target="' + targetId + '"]:not(.nav-logo)');
+    if (direct) return direct;
+    var sub = document.querySelector('.nav-drop-menu a[data-target="' + targetId + '"]');
+    if (sub) {
+      var dd = sub.closest('.nav-dropdown');
+      return dd ? dd.querySelector('.nav-trigger') : null;
+    }
+    return null;
+  }
+
+  function moveIndicator(el, instant) {
+    if (!el || !indicator || !topnav) return;
+    var rect = el.getBoundingClientRect();
+    var parentRect = topnav.getBoundingClientRect();
+    var left = (rect.left - parentRect.left) / ZOOM;
+    var width = rect.width / ZOOM;
+    if (instant) {
+      indicator.style.transition = 'none';
+      indicator.style.left = left + 'px';
+      indicator.style.width = width + 'px';
+      void indicator.offsetWidth;
+      indicator.style.transition = '';
+      indicator.classList.add('ready');
+    } else {
+      indicator.classList.add('ready');
+      indicator.style.left = left + 'px';
+      indicator.style.width = width + 'px';
+    }
+  }
+
+  function switchPage(targetId) {
+    document.querySelectorAll('.topnav > a[data-target]:not(.nav-logo)').forEach(function (link) {
+      link.classList.toggle('active', link.dataset.target === targetId);
+    });
+    document.querySelectorAll('.nav-drop-menu a[data-target]').forEach(function (link) {
+      link.classList.toggle('active', link.dataset.target === targetId);
+    });
+    pages.forEach(function (page) {
+      var isTarget = page.id === targetId;
+      page.classList.toggle('active', isTarget);
+      if (isTarget) {
+        page.classList.remove('fade-in');
+        void page.offsetWidth;
+        page.classList.add('fade-in');
+      } else {
+        page.classList.remove('fade-in');
+      }
+    });
+    dropdowns.forEach(function (dd) {
+      var hasActive = dd.querySelector('.nav-drop-menu a.active');
+      dd.classList.toggle('active', !!hasActive);
+    });
+    updateBreadcrumb(targetId);
+    moveIndicator(getNavElementFor(targetId), false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  topnav.addEventListener('click', function (e) {
+    var logo = e.target.closest('.nav-logo');
+    if (logo) { e.preventDefault(); switchPage('about'); return; }
+
+    var subLink = e.target.closest('.nav-drop-menu a[data-target]');
+    if (subLink) { e.preventDefault(); switchPage(subLink.dataset.target); return; }
+
+    var trigger = e.target.closest('.nav-trigger');
+    if (trigger) {
+      e.preventDefault();
+      var defaultTarget = trigger.dataset.default;
+      if (defaultTarget) switchPage(defaultTarget);
+      return;
+    }
+
+    var navLink = e.target.closest('.topnav > a[data-target]');
+    if (navLink && !navLink.classList.contains('nav-logo')) {
+      e.preventDefault();
+      switchPage(navLink.dataset.target);
+      return;
+    }
+  });
+
+  function initIndicator() {
+    moveIndicator(getNavElementFor('about'), true);
+  }
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initIndicator();
+  } else {
+    document.addEventListener('DOMContentLoaded', initIndicator);
+  }
+  window.addEventListener('load', initIndicator);
+
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      var currentPage = document.querySelector('.page.active');
+      if (currentPage) moveIndicator(getNavElementFor(currentPage.id), true);
+    }, 100);
+  });
+})();
+</script>
+</body>
+</html>
